@@ -1,0 +1,14 @@
+<!-- contact_confirm_delete.html -->
+{% extends 'mailings/base.html' %}
+
+{% block title %}Удалить клиента{% endblock %}
+
+{% block content %}
+<h2>Удалить клиента</h2>
+<p>Вы уверены, что хотите удалить "{{object.full_name}}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Удалить</button>
+    <a href="{% url 'mailings:contact_list' %}" class="btn btn-secondary">Отмена</a>
+</form>
+{% endblock %}

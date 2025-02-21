@@ -1,0 +1,19 @@
+<!-- mailings_list.html -->
+{% extends 'mailings/base.html' %}
+
+{% block title %}Список клиентов{% endblock %}
+
+{% block content %}
+<h2>Список рассылок</h2>
+<a class="p-2 btn btn-outline-primary" href="{% url 'mailings:mailings_create' %}">Добавить рассылку</a>
+<ul class="list-group my-5">
+    {% for mailing in object_list %}
+        <li class="list-group-item">
+            <a href="{% url 'mailings:mailings_detail' mailing.pk %}">{{mailing.status}}</a> -
+            {% for contact in mailing.contact.all %}
+                {{ contact.full_name }} ({{ contact.email }}),
+            {% endfor %}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

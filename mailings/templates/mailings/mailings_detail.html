@@ -1,0 +1,22 @@
+{% extends 'mailings/base.html' %}
+
+{% block title %}
+    Mailings Detail
+{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <h2 class="text-center my-3">Статус: {{object.status}}</h2>
+        <p class="text-center">Дата и время первой отправки: {{object.first_sending}}</p>
+      <p class="text-center">Дата и время окончания отправки: {{object.end_sending}}</p>
+      <p class="text-center">Сообщение: {{object.message}}</p>
+      <p class="text-center">Получатели: {% for contact in mailings.contact.all %}
+                {{ contact.full_name }} ({{ contact.email }}),
+            {% endfor %}</p>
+        <div class="text-center">
+            <a href="{% url 'mailings:mailings_update' mailings.pk %}" class="btn btn-lg btn-block btn-outline-primary mt-3">Редактировать</a>
+            <a href="{% url 'mailings:mailings_delete' mailings.pk %}" class="btn btn-lg btn-block btn-outline-primary mt-3">Удалить</a>
+            <a href="{% url 'mailings:mailings_list' %}" class="btn btn-lg btn-primary mt-3">Назад</a>
+        </div>
+    </div>
+{% endblock %}
