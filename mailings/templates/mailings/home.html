@@ -4,5 +4,15 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-
+<ul class="list-group">
+        <li class="list-group-item">
+            Количество всех рассылок: {{ count_mailings }}
+        </li>
+    <li class="list-group-item">
+            Количество активных рассылок: {{ count_active_mailings }}
+        </li>
+    <li class="list-group-item">
+            Количество уникальных получателей: {{ unique_contacts }}
+        </li>
+</ul>
 {% endblock %}

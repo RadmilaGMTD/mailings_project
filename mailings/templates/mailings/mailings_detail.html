@@ -16,6 +16,10 @@
         <div class="text-center">
             <a href="{% url 'mailings:mailings_update' mailings.pk %}" class="btn btn-lg btn-block btn-outline-primary mt-3">Редактировать</a>
             <a href="{% url 'mailings:mailings_delete' mailings.pk %}" class="btn btn-lg btn-block btn-outline-primary mt-3">Удалить</a>
+            <form action="{% url 'mailings:send_mailing' mailings.pk %}" method="post">
+    {% csrf_token %}
+    <button class="btn btn-lg btn-block btn-outline-primary mt-3" type="submit">Отправить рассылку</button>
+</form>
             <a href="{% url 'mailings:mailings_list' %}" class="btn btn-lg btn-primary mt-3">Назад</a>
         </div>
     </div>
