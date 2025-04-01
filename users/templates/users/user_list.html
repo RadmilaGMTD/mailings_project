@@ -1,0 +1,26 @@
+<!-- user_list.html -->
+{% extends 'mailings/base.html' %}
+
+{% block title %}Список пользователей{% endblock %}
+
+{% block content %}
+<h2>Список пользователей</h2>
+<ul class="list-group my-5">
+    {% for user in object_list %}
+        <li class="list-group-item">
+            {{ user.email }} -
+            {% if user.is_active %}
+                <form action="{% url 'users:block_users' user.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Заблокировать</button>
+                </form>
+            {% else %}
+                <form action="{% url 'users:unlock_users' user.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Разблокировать</button>
+                </form>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

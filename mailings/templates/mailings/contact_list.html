@@ -1,0 +1,16 @@
+<!-- contact_list.html -->
+{% extends 'mailings/base.html' %}
+
+{% block title %}Список клиентов{% endblock %}
+
+{% block content %}
+<h2>Список клиентов</h2>
+<a class="p-2 btn btn-outline-primary" href="{% url 'mailings:contact_create' %}">Добавить клиента</a>
+<ul class="list-group my-5">
+    {% for contact in object_list %}
+        <li class="list-group-item">
+            <a href="{% url 'mailings:contact_detail' contact.pk %}">{{ contact.full_name }}</a> - {{ contact.email }}
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

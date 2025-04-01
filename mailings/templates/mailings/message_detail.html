@@ -1,0 +1,17 @@
+{% extends 'mailings/base.html' %}
+
+{% block title %}
+    Message Detail
+{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <h2 class="text-center my-3">{{object.subject}}</h2>
+        <p class="text-center">{{object.body}}</p>
+        <div class="text-center">
+            <a href="{% url 'mailings:message_update' message.pk %}" class="btn btn-lg btn-block btn-outline-primary mt-3">Редактировать</a>
+            <a href="{% url 'mailings:message_delete' message.pk %}" class="btn btn-lg btn-block btn-outline-primary mt-3">Удалить</a>
+            <a href="{% url 'mailings:message_list' %}" class="btn btn-lg btn-primary mt-3">Назад</a>
+        </div>
+    </div>
+{% endblock %}
