@@ -1,0 +1,37 @@
+{% extends 'mailings/base.html' %}
+
+{% block title %}Статистика{% endblock %}
+
+{% block content %}
+<h1>Статистика рассылок</h1>
+
+<p>Количество успешных попыток: {{ count_successful_mailings }}</p>
+<p>Количество неуспешных попыток: {{ count_unsuccessful_mailings }}</p>
+<p>Общее количество рассылок: {{ count_total_mailings }}</p>
+<p>Количество отправленных сообщений: {{count_messages}}</p>
+
+<h2>Успешные попытки:</h2>
+<ul>
+    {% for mailing in successful_mailings %}
+        <li>{{ mailing.attempt_time }} - {{ mailing.status }} -
+            {% for contact in mailing.mailing.contact.all %}
+                {{ contact.email }}
+            {% endfor %}
+            - {{ mailing.mailing.message }}</li>
+    {% empty %}
+        <li>Нет успешных попыток.</li>
+    {% endfor %}
+</ul>
+<h2>Неуспешные попытки:</h2>
+<ul>
+    {% for mailing in unsuccessful_mailings %}
+        <li>{{ mailing.attempt_time }} - {{ mailing.status }} -
+            {% for contact in mailing.mailing.contact.all %}
+                {{ contact.email }}
+            {% endfor %}
+            - {{ mailing.mailing.message }}</li>
+    {% empty %}
+        <li>Нет неуспешных попыток.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

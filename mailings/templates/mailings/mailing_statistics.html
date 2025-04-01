@@ -1,14 +1,13 @@
 <!-- mailing_statistics.html -->
 {% extends 'mailings/base.html' %}
 
-{% block title %}Статистика рассылок{% endblock %}
+{% block title %}Статистика рассылки{% endblock %}
 
 {% block content %}
-<h2>Статистика рассылок</h2>
+<h2>Статистика рассылки</h2>
 <ul class="list-group my-5">
         <li class="list-group-item">
-          <p>Рассылка: {{ mailing.message.subject }}</p>
-          <p>Статус: {{ mailing.status }}</p>
+            <h4 class="text-center">Рассылка: {{mailing.message.subject}}</h4>
           <h3>Попытки отправки:</h3>
 <table class="table table-striped">
     <thead>
@@ -16,14 +15,19 @@
             <th>Время</th>
             <th>Статус</th>
             <th>Ответ сервера</th>
+            <th>Получатели</th>
         </tr>
     </thead>
     <tbody>
-        {% for attempt in mailing.mailingattempt_set.all %}
+        {% for attempt in mailing_attempts %}
         <tr>
             <td>{{ attempt.attempt_time|date:"D d M Y H:i:s" }}</td>
             <td>{{ attempt.status }}</td>
             <td>{{ attempt.server_response }}</td>
+            <td>{% for contact in attempt.mailing.contact.all %}
+                {{ contact.email }}
+            {% endfor %}
+            </td>
         </tr>
         {% endfor %}
     </tbody>

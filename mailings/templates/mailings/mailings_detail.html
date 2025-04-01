@@ -14,13 +14,27 @@
                 {{ contact.full_name }} ({{ contact.email }}),
             {% endfor %}</p>
         <div class="text-center">
+            <a href="{% url 'mailings:mailing_statistics' mailings.pk %}" class="btn btn-lg btn-block btn-outline-primary mt-3">Попытки рассылки</a>
             <a href="{% url 'mailings:mailings_update' mailings.pk %}" class="btn btn-lg btn-block btn-outline-primary mt-3">Редактировать</a>
             <a href="{% url 'mailings:mailings_delete' mailings.pk %}" class="btn btn-lg btn-block btn-outline-primary mt-3">Удалить</a>
+            <a href="{% url 'mailings:mailings_list' %}" class="btn btn-lg btn-block btn-outline-primary mt-3">Назад</a>
             <form action="{% url 'mailings:send_mailing' mailings.pk %}" method="post">
     {% csrf_token %}
     <button class="btn btn-lg btn-block btn-outline-primary mt-3" type="submit">Отправить рассылку</button>
 </form>
-            <a href="{% url 'mailings:mailings_list' %}" class="btn btn-lg btn-primary mt-3">Назад</a>
+            {% if "mailings.can_is_active_mailings" in perms %}
+             {% if mailings.is_active %}
+            <form action="{% url 'mailings:disable_mailing' mailings.pk %}" method="post">
+                    {% csrf_token %}
+             <button type="submit" class="btn btn-danger mt-3 ">Отключить рассылку</button>
+                </form>
+            {% else %}
+            <form action="{% url 'mailings:enable_mailing' mailings.pk %}" method="post">
+                    {% csrf_token %}
+             <button type="submit" class="btn btn-lg btn-block btn-outline-primary mt-3">Включить рассылку</button>
+                </form>
+            {% endif %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}

@@ -1,0 +1,17 @@
+{% extends "mailings/base.html" %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+  <h2>Вход</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Войти</button>
+  </form>
+<p>
+    {% if form.non_field_errors %}
+      <a href="{% url 'users:password_reset' %}" class="btn btn-primary mt-2" >Забыли пароль?</a>
+    {% endif %}
+  </p>
+{% endblock %}

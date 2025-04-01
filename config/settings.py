@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if os.getenv("DEBUG") == "True" else False
+DEBUG = os.getenv("DEBUG", False) == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "mailings",
+    "users",
+    "django_extensions"
 ]
 
 MIDDLEWARE = [
@@ -59,7 +61,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, 'templates')],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -146,7 +148,23 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST")
 EMAIL_PORT = os.getenv("EMAIL_PORT")
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', False) == 'True'
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', False) == 'True'
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+
+AUTH_USER_MODEL = 'users.User'
+
+LOGIN_REDIRECT_URL = 'mailings:home'
+LOGOUT_REDIRECT_URL = 'mailings:home'
+LOGIN_URL = 'users:login'
+
+CACHE_ENABLE = True
+if CACHE_ENABLE:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': os.getenv("LOCATION"),
+        }
+    }

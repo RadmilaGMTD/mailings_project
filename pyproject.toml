@@ -10,6 +10,9 @@ python = "^3.12"
 django = "^5.1.6"
 psycopg2-binary = "^2.9.10"
 python-dotenv = "^1.0.1"
+pillow = "^11.1.0"
+django-extensions = "^3.2.3"
+redis = "^5.2.1"
 
 
 [tool.poetry.group.lint.dependencies]
